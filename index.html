@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Choice Quiz</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .quiz-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .option {
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container quiz-container">
+        <div class="question">What is the capital of France?</div>
+        <div class="options">
+            <div class="form-check option">
+                <input class="form-check-input" type="checkbox" id="option1" value="London" onclick="checkAnswer(this)">
+                <label class="form-check-label" for="option1">London</label>
+            </div>
+            <div class="form-check option">
+                <input class="form-check-input" type="checkbox" id="option2" value="Paris" onclick="checkAnswer(this)">
+                <label class="form-check-label" for="option2">Paris</label>
+            </div>
+            <div class="form-check option">
+                <input class="form-check-input" type="checkbox" id="option3" value="Rome" onclick="checkAnswer(this)">
+                <label class="form-check-label" for="option3">Rome</label>
+            </div>
+            <div class="form-check option">
+                <input class="form-check-input" type="checkbox" id="option4" value="Berlin" onclick="checkAnswer(this)">
+                <label class="form-check-label" for="option4">Berlin</label>
+            </div>
+        </div>
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        function checkAnswer(element) {
+            const resultDiv = document.getElementById('result');
+            const options = document.querySelectorAll('.form-check-input');
+
+            if (element.checked) {
+                // Uncheck all other checkboxes
+                options.forEach(option => {
+                    if (option !== element) {
+                        option.checked = false;
+                    }
+                });
+
+                // Check the answer
+                if (element.value === 'Paris') {
+                    resultDiv.innerHTML = "Correct! Paris is the capital of France.";
+                    resultDiv.className = "result correct";
+                } else {
+                    resultDiv.innerHTML = "Incorrect. Try again!";
+                    resultDiv.className = "result incorrect";
+                }
+                resultDiv.style.display = 'block';
+            } else {
+                resultDiv.style.display = 'none';
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
