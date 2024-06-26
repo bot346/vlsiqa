@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Choice Quiz</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .quiz-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .option {
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container quiz-container">
+        <div id="question" class="question"></div>
+        <div id="options" class="options"></div>
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Make changes here 
+        const quizData = {
+            question: "Why has leakage power become a critical concern in deep submicron technology?",
+            options: [
+                { text: "A) Because it significantly reduces the efficiency of dynamic power", correct: false },
+                { text: "B) Due to its rapid increase relative to dynamic power in new technology generations.", correct: true },
+                { text: "C) Since it primarily affects the reliability of semiconductor devices.", correct: false },
+                { text: "D) As it enhances the performance of deep submicron technology.", correct: false }
+            ]
+        };
+
+        // Function to render the quiz
+        function renderQuiz() {
+            document.getElementById('question').innerText = quizData.question;
+
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+
+            quizData.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'form-check option';
+                optionElement.innerHTML = `
+                    <input class="form-check-input" type="checkbox" id="option${index}" value="${option.correct}" onclick="checkAnswer(this)">
+                    <label class="form-check-label" for="option${index}">${option.text}</label>
+                `;
+                optionsDiv.appendChild(optionElement);
+            });
+        }
+
+        // Function to check the answer
+        function checkAnswer(element) {
+            const resultDiv = document.getElementById('result');
+            const options = document.querySelectorAll('.form-check-input');
+
+            if (element.checked) {
+                // Uncheck all other checkboxes
+                options.forEach(option => {
+                    if (option !== element) {
+                        option.checked = false;
+                    }
+                });
+
+                // Check the answer
+                if (element.value === 'true') {
+                    resultDiv.innerHTML = "Correct! " + quizData.options.find(option => option.correct).text + " is the correct answer.";
+                    resultDiv.className = "result correct";
+                } else {
+                    resultDiv.innerHTML = "Incorrect. Try again!";
+                    resultDiv.className = "result incorrect";
+                }
+                resultDiv.style.display = 'block';
+            } else {
+                resultDiv.style.display = 'none';
+            }
+        }
+
+        // Render the quiz on page load
+        window.onload = renderQuiz;
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
